@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const connectDB = require('./db/connection');
 
 require("dotenv").config({ path: "./config.env" });
 const port = process.env.PORT || 5000;
@@ -9,16 +10,18 @@ app.use(cors());
 app.use(express.json());
 
 app.use(require("./routes/record"));
+app.get('/', (req,res) => res.send('hello machan'));
 
 // Get MongoDB driver connection
-const dbo = require("./db/connection");
+// const dbo = require("./db/connection");
+connectDB();
  
 app.listen(port, () => {
   // Perform a database connection when server starts
-  dbo.connectToServer(function (err) {
-    if (err) console.error(err);
+  // dbo.connectToServer(function (err) {
+  //   if (err) console.error(err);
  
-  });
+  // });
   console.log(`Server is running on port: ${port}`);
   console.log("success !!!")
 });
